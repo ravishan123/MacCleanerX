@@ -1,0 +1,54 @@
+# Generate the Xcode project with:  xcodegen generate
+# MacCleaner.xcodeproj is a build artifact and is not committed.
+name: MacCleaner
+options:
+  bundleIdPrefix: io.github.maccleaner
+  deploymentTarget:
+    macOS: "14.0"
+  createIntermediateGroups: true
+  developmentLanguage: en
+
+settings:
+  base:
+    SWIFT_VERSION: "6.0"
+    MACOSX_DEPLOYMENT_TARGET: "14.0"
+
+packages:
+  CleanerCore:
+    path: Packages/CleanerCore
+
+targets:
+  MacCleaner:
+    type: application
+    platform: macOS
+    sources:
+      - path: App/MacCleaner
+    dependencies:
+      - package: CleanerCore
+    settings:
+      base:
+        PRODUCT_NAME: Mac Cleaner
+        PRODUCT_MODULE_NAME: MacCleaner
+        PRODUCT_BUNDLE_IDENTIFIER: io.github.maccleaner.app
+        MARKETING_VERSION: "1.0.0"
+        CURRENT_PROJECT_VERSION: "1"
+        GENERATE_INFOPLIST_FILE: YES
+        INFOPLIST_KEY_CFBundleDisplayName: Mac Cleaner
+        INFOPLIST_KEY_LSApplicationCategoryType: public.app-category.utilities
+        INFOPLIST_KEY_NSHumanReadableCopyright: "Open source under the MIT License."
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        # v1: no sandbox, no privileged helper, ad-hoc signature only.
+        ENABLE_APP_SANDBOX: NO
+        ENABLE_HARDENED_RUNTIME: YES
+        CODE_SIGN_STYLE: Manual
+        CODE_SIGN_IDENTITY: "-"
+        DEVELOPMENT_TEAM: ""
+
+schemes:
+  MacCleaner:
+    build:
+      targets:
+        MacCleaner: all
+    test:
+      targets:
+        - package: CleanerCore/CleanerCoreTests
