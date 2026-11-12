@@ -53,7 +53,7 @@ struct SidebarView: View {
     @FocusState private var focused: Bool
 
     private let main: [SidebarItem] = [.smartCare, .cleanup]
-    private let space: [SidebarItem] = [.storage, .largeFiles, .duplicates]
+    private let space: [SidebarItem] = [.largeFiles, .duplicates]  // Storage is hidden for now
     private let apps: [SidebarItem] = [.uninstaller]
     private let later: [SidebarItem] = [.protection, .performance]
 

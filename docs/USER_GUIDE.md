@@ -13,7 +13,6 @@
 - [Try it safely first](#try-it-safely-first)
 - [Smart Care](#smart-care)
 - [Cleanup](#cleanup)
-- [Storage](#storage)
 - [Large & old files](#large--old-files)
 - [Duplicates](#duplicates)
 - [Uninstaller](#uninstaller)
@@ -94,16 +93,6 @@ The malware check looks for warning signs in startup items and app signatures. "
 6. Click **Move to Trash** and confirm.
 
 **Delete permanently** (the switch in the bottom bar) skips the Trash. It's off every time Mac Cleaner starts, and asks you twice. Emptying the Trash and deleting old simulators are always permanent, so they always get the second question.
-
-## Storage
-
-Click **Measure** to see how your disk is used. It reads your home folder and Applications; this can take a minute.
-
-- The grid of dots is your whole disk: **black** is used, **grey** is free, and **red** is the category you selected.
-- The list shows each category's size and share. "System & other" is macOS itself, other users, snapshots and anything Mac Cleaner can't read.
-- Select a category to see its largest items. The arrow button shows an item in Finder. The button at the top takes you to the tool that can clean that category.
-
-Storage only measures; it never removes anything.
 
 ## Large & old files
 

@@ -60,7 +60,6 @@ Requires macOS 14 Sonoma or later, on Apple silicon or Intel.
 |---|---|
 | **Smart Care** | One Scan button checks junk, startup items and performance at the same time, then recommends what to do, labeled **Safe** or **Review**. |
 | **Cleanup** | Twelve categories: system cache, app logs and crash reports, temporary files, broken downloads, Mail attachments, Trash, Xcode junk, developer caches (npm, Gradle, Cargo…), iOS update files, iPhone/iPad backups, old installers and broken startup items. |
-| **Storage** | See what fills your disk (documents, images, videos, audio, archives, apps, developer files, caches, backups, Mail) and the largest items in each. |
 | **Large & old files** | Big files, and files you haven't opened in months, in your personal folders. |
 | **Duplicates** | Exact copies, confirmed byte for byte. One copy always stays. |
 | **Uninstaller** | Remove an app together with the files it left in `~/Library`, and find leftovers of apps you deleted long ago. |
@@ -96,7 +95,7 @@ Read the full **[safety design](docs/SAFETY.md)**.
 flowchart TB
     subgraph APP["Mac Cleaner.app (SwiftUI)"]
         direction LR
-        UI["Screens<br/>Smart Care · Cleanup · Storage<br/>Large & old · Duplicates · Uninstaller"] --> VM["@Observable models<br/>selection · confirmation"]
+        UI["Screens<br/>Smart Care · Cleanup<br/>Large & old · Duplicates · Uninstaller"] --> VM["@Observable models<br/>selection · confirmation"]
     end
     subgraph CORE["CleanerCore (Swift package, no UI, 134 tests)"]
         direction LR

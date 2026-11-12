@@ -4,6 +4,11 @@ All notable changes are listed here. The format follows [Keep a Changelog](https
 
 ## [Unreleased]
 
+## [1.0.1] - 2026-11-12
+
+### Changed
+- The Storage screen is hidden for now while its scan is being reworked. The code is still in the app.
+
 ### Fixed
 - Cancel and Rescan now really stop a running scan. Before, the old scan kept walking the disk and new ones piled up, which could freeze the app.
 - Storage and Large & old files are much faster: cloud-provider folders, other volumes and generated folders such as `node_modules` are skipped, and small files are dropped early.
