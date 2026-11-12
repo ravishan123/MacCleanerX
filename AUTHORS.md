@@ -1,3 +1,10 @@
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="docs/images/banner-dark.svg">
+    <img alt="Mac Cleaner: nothing is deleted until you confirm. By Ravishan Lakshitha." src="docs/images/banner-light.svg" width="100%">
+  </picture>
+</p>
+
 # Authors and credits
 
 ## Creator and maintainer

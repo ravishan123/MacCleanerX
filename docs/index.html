@@ -47,9 +47,10 @@
   nav .links a:hover { color: var(--text); }
 
   .hero { text-align: center; padding: 56px 0 72px; }
-  .hero img { width: 180px; height: 180px; }
+  .hero .banner img { display: block; width: 100%; height: auto; border-radius: 24px; border: 1px solid var(--line); }
+  .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
   .hero h1 { font-size: clamp(40px, 8vw, 72px); line-height: 1.05; margin: 20px 0 14px; letter-spacing: -.02em; }
-  .hero p.lead { font-size: clamp(18px, 2.6vw, 22px); color: var(--muted); max-width: 620px; margin: 0 auto 32px; }
+  .hero p.lead { font-size: clamp(18px, 2.6vw, 22px); color: var(--muted); max-width: 620px; margin: 36px auto 32px; }
   .cta { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
   .btn { display: inline-flex; align-items: center; gap: 10px; padding: 14px 26px; border-radius: 999px; font-weight: 600; text-decoration: none; border: 1px solid var(--line); }
   .btn.primary { background: var(--btn-bg); color: var(--btn-text); border-color: var(--btn-bg); }
@@ -93,8 +94,11 @@
   </nav>
 
   <header class="hero">
-    <img src="images/icon.png" alt="Mac Cleaner app icon">
-    <h1>Mac Cleaner</h1>
+    <picture class="banner">
+      <source media="(prefers-color-scheme: dark)" srcset="images/banner-dark.svg">
+      <img src="images/banner-light.svg" alt="Mac Cleaner: nothing is deleted until you confirm. By Ravishan Lakshitha.">
+    </picture>
+    <h1 class="sr">Mac Cleaner</h1>
     <p class="lead">A free, open-source Mac cleaner that finds junk, shows where your space goes and removes apps with their leftovers. <strong>It never removes anything without asking you first.</strong></p>
     <div class="cta">
       <a class="btn primary" id="download" href="https://github.com/ravishan123/MacCleanerX/releases/latest">

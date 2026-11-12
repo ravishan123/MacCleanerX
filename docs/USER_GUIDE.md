@@ -1,3 +1,10 @@
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="images/banner-dark.svg">
+    <img alt="Mac Cleaner: nothing is deleted until you confirm. By Ravishan Lakshitha." src="images/banner-light.svg" width="100%">
+  </picture>
+</p>
+
 # User guide
 
 - [Install](#install)

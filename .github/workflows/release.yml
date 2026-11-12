@@ -44,12 +44,13 @@ jobs:
         run: |
           VERSION="${TAG#v}"
           DMG="build/MacCleaner-$VERSION.dmg"
-          # Release notes: this version's section of the changelog.
+          # Release notes: banner, this version's section of the changelog, install steps.
+          cat docs/release-header.md > notes.md
           awk -v v="$VERSION" '
             $0 ~ "^## \\[" v "\\]" {on=1; next}
             on && /^## \[/ {exit}
             on {print}
-          ' CHANGELOG.md > notes.md
+          ' CHANGELOG.md >> notes.md
           cat docs/release-footer.md >> notes.md
           if gh release view "$TAG" >/dev/null 2>&1; then
             gh release upload "$TAG" "$DMG" "$DMG.sha256" --clobber

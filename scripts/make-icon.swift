@@ -1,6 +1,7 @@
 #!/usr/bin/env swift
 // Draws the Mac Cleaner app icon with CoreGraphics and writes every size the
-// asset catalog needs, plus images for the README and the download page.
+// asset catalog needs, plus images for the README and the download page:
+// icon.png, banner-{dark,light}.png (from the .svg banners) and social-preview.png.
 //
 // Usage: swift scripts/make-icon.swift      (run from the repository root)
 //
@@ -136,19 +137,25 @@ for px in [16, 32, 64, 128, 256, 512, 1024] {
 // README / website icon
 write(render(width: 512, height: 512) { drawIcon($0, 512) }, images.appending(path: "icon.png"))
 
-// Social preview (GitHub → Settings → Social preview), 1280×640
+// Banner PNGs (2x) for places that can't show SVG: release notes, social cards.
+func loadBanner(_ name: String) -> CGImage {
+    let url = images.appending(path: "banner-\(name).svg")
+    // AppKit's SVG renderer doesn't know "ui-monospace", so name Menlo explicitly.
+    let svg = try! String(contentsOf: url, encoding: .utf8)
+        .replacingOccurrences(of: "font-family=\"ui-monospace,", with: "font-family=\"Menlo, ui-monospace,")
+    guard let img = NSImage(data: Data(svg.utf8)) else { fatalError("can't read \(url.path)") }
+    var rect = CGRect(x: 0, y: 0, width: 2560, height: 800)
+    return img.cgImage(forProposedRect: &rect, context: nil, hints: nil)!
+}
+for name in ["dark", "light"] {
+    let banner = loadBanner(name)
+    write(render(width: 2560, height: 800) { $0.draw(banner, in: CGRect(x: 0, y: 0, width: 2560, height: 800)) },
+          images.appending(path: "banner-\(name).png"))
+}
+
+// Social preview (GitHub → Settings → Social preview), 1280×640: the dark banner on black.
+let dark = loadBanner("dark")
 write(render(width: 1280, height: 640) { ctx in
-    ctx.setFillColor(color(0x0B0B0C)); ctx.fill(CGRect(x: 0, y: 0, width: 1280, height: 640))
-    ctx.saveGState(); ctx.translateBy(x: 70, y: 70); drawIcon(ctx, 500); ctx.restoreGState()
-    let title = NSAttributedString(string: "Mac Cleaner", attributes: [
-        .font: NSFont.systemFont(ofSize: 92, weight: .bold), .foregroundColor: NSColor.white])
-    let sub = NSAttributedString(string: "Free, open-source and careful.\nIt never removes anything without asking.", attributes: [
-        .font: NSFont.systemFont(ofSize: 34, weight: .regular), .foregroundColor: NSColor(white: 1, alpha: 0.65)])
-    let by = NSAttributedString(string: "by Ravishan Lakshitha · github.com/ravishan123", attributes: [
-        .font: NSFont.monospacedSystemFont(ofSize: 22, weight: .medium), .foregroundColor: NSColor(red: 0.91, green: 0.13, blue: 0.17, alpha: 1)])
-    NSGraphicsContext.current = NSGraphicsContext(cgContext: ctx, flipped: false)
-    title.draw(at: CGPoint(x: 610, y: 360))
-    sub.draw(in: CGRect(x: 614, y: 220, width: 640, height: 120))
-    by.draw(at: CGPoint(x: 616, y: 150))
-    NSGraphicsContext.current = nil
+    ctx.setFillColor(color(0x000000)); ctx.fill(CGRect(x: 0, y: 0, width: 1280, height: 640))
+    ctx.draw(dark, in: CGRect(x: 0, y: 120, width: 1280, height: 400))
 }, images.appending(path: "social-preview.png"))

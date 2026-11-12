@@ -1,10 +1,12 @@
 <p align="center">
-  <img src="docs/images/icon.png" width="160" alt="Mac Cleaner icon">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="docs/images/banner-dark.svg">
+    <img alt="Mac Cleaner: nothing is deleted until you confirm. By Ravishan Lakshitha." src="docs/images/banner-light.svg" width="100%">
+  </picture>
 </p>
 
-<h1 align="center">Mac Cleaner</h1>
-
 <p align="center">
+  <img src="docs/images/icon.png" width="22" alt="" align="absmiddle">
   <b>A free, open-source Mac cleaner that never removes anything without asking you first.</b><br>
   Created by <a href="https://github.com/ravishan123">Ravishan Lakshitha</a>
 </p>
