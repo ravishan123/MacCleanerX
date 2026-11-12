@@ -454,3 +454,43 @@ struct AppUninstallerTests {
         #expect(AppLeftoversModule.bundleID(fromName: "My Folder.with.dots") == nil)
     }
 }
+
+@Suite("Scan performance and cancellation")
+struct ScanPerformanceTests {
+
+    @Test func largeFilesSkipGeneratedFolders() async throws {
+        let fx = try Fixture()
+        try fx.file("home/Documents/project/node_modules/pkg/big.bin", bytes: 3_000_000)
+        try fx.file("home/Documents/project/real.mov", bytes: 3_000_000)
+        let findings = await LargeOldFilesModule(context: fx.context(), criteria: .init(minimumBytes: 2_000_000)).scan()
+        #expect(names(findings) == ["real.mov"])
+    }
+
+    @Test func scanLimitsNeverExceedTheLimit() async {
+        final class Counter: @unchecked Sendable {
+            let lock = NSLock(); var running = 0; var peak = 0
+            func enter() { lock.withLock { running += 1; peak = max(peak, running) } }
+            func leave() { lock.withLock { running -= 1 } }
+        }
+        let counter = Counter()
+        var results = 0
+        await ScanLimits.run(Array(0..<20), limit: 3, work: { _ in
+            counter.enter(); try? await Task.sleep(for: .milliseconds(10)); counter.leave(); return 1
+        }, onResult: { results += $0 })
+        #expect(results == 20)
+        #expect(counter.peak <= 3)
+    }
+
+    @Test func cancellingStopsStartingNewWork() async {
+        let task = Task {
+            var done = 0
+            await ScanLimits.run(Array(0..<1000), limit: 2, work: { _ in
+                try? await Task.sleep(for: .milliseconds(20)); return 1
+            }, onResult: { done += $0 })
+            return done
+        }
+        try? await Task.sleep(for: .milliseconds(50))
+        task.cancel()
+        #expect(await task.value < 1000)
+    }
+}

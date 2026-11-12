@@ -4,6 +4,12 @@ All notable changes are listed here. The format follows [Keep a Changelog](https
 
 ## [Unreleased]
 
+### Fixed
+- Cancel and Rescan now really stop a running scan. Before, the old scan kept walking the disk and new ones piled up, which could freeze the app.
+- Storage and Large & old files are much faster: cloud-provider folders, other volumes and generated folders such as `node_modules` are skipped, and small files are dropped early.
+- Smart Care and Cleanup run at most 4 scan tasks at a time, so the app stays responsive.
+- Smart Care and Cleanup screens no longer search the whole findings list for every row.
+
 ## [1.0.0] - 2026-11-12
 
 First public release.

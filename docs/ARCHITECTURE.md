@@ -386,5 +386,5 @@ Packages/CleanerCore/Sources/CleanerCore/
   Store/                     AppDatabase, Records
   Model/                     Finding, CleanResult, CleanPlan
   Support/                   ModuleContext, CommandRunner, FullDiskAccess, AppNameResolver
-Packages/CleanerCore/Tests/CleanerCoreTests/   131 Swift Testing tests (fixtures in $TMPDIR)
+Packages/CleanerCore/Tests/CleanerCoreTests/   134 Swift Testing tests (fixtures in $TMPDIR)
 ```

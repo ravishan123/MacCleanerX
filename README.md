@@ -98,7 +98,7 @@ flowchart TB
         direction LR
         UI["Screens<br/>Smart Care · Cleanup · Storage<br/>Large & old · Duplicates · Uninstaller"] --> VM["@Observable models<br/>selection · confirmation"]
     end
-    subgraph CORE["CleanerCore (Swift package, no UI, 131 tests)"]
+    subgraph CORE["CleanerCore (Swift package, no UI, 134 tests)"]
         direction LR
         ORC["ScanOrchestrator<br/>+ RuleEngine"] --> MODS["16 cleanup modules<br/>security · performance"]
         MODS --> RM["Remover"] --> SG["SafetyGuard<br/>path allowlist"]
@@ -130,7 +130,7 @@ cd MacCleanerX
 xcodegen generate
 open MacCleaner.xcodeproj           # press ⌘R
 
-swift test --package-path Packages/CleanerCore   # 131 tests, fixtures only
+swift test --package-path Packages/CleanerCore   # 134 tests, fixtures only
 scripts/make-dmg.sh 1.0.0                        # → build/MacCleaner-1.0.0.dmg
 ```
 

@@ -23,9 +23,14 @@ enum PersonalFolders {
 
     /// Regular files and bundles (as single entries) under the personal
     /// folders. Hidden files and app-managed libraries are skipped.
-    static func entries(_ context: ModuleContext) throws -> [Entry] {
+    /// Folders full of generated files, never the user's own documents.
+    static let generatedFolders: Set<String> = ["node_modules", "DerivedData", ".build", "Pods", "__pycache__"]
+
+    /// `minimumBytes`: smaller regular files are dropped immediately, which
+    /// keeps both time and memory low on big folders.
+    static func entries(_ context: ModuleContext, minimumBytes: Int64 = 0) throws -> [Entry] {
         let keys: [URLResourceKey] = [
-            .isRegularFileKey, .isPackageKey, .isSymbolicLinkKey, .totalFileAllocatedSizeKey,
+            .isRegularFileKey, .isDirectoryKey, .isPackageKey, .isSymbolicLinkKey, .totalFileAllocatedSizeKey,
             .contentAccessDateKey, .contentModificationDateKey, .fileResourceIdentifierKey,
         ]
         var result: [Entry] = []
@@ -46,14 +51,22 @@ enum PersonalFolders {
                 if Task.isCancelled { return result }
                 guard let values = try? url.resourceValues(forKeys: Set(keys)), values.isSymbolicLink != true else { continue }
                 if managedLibraries.contains(url.pathExtension.lowercased()) { continue }
+                if values.isDirectory == true, values.isPackage != true {
+                    if generatedFolders.contains(url.lastPathComponent) { enumerator.skipDescendants() }
+                    continue
+                }
                 let isPackage = values.isPackage == true
                 guard values.isRegularFile == true || isPackage else { continue }
 
+                let size: Int64
+                if isPackage {
+                    size = SizeCalculator.measure(url)?.allocatedBytes ?? 0
+                } else {
+                    size = Int64(values.totalFileAllocatedSize ?? 0)
+                    if size < minimumBytes { continue }
+                }
                 var st = stat()
                 guard lstat(url.path(percentEncoded: false), &st) == 0 else { continue }
-                let size = isPackage
-                    ? (SizeCalculator.measure(url)?.allocatedBytes ?? 0)
-                    : Int64(values.totalFileAllocatedSize ?? 0)
                 let used = [values.contentAccessDate, values.contentModificationDate].compactMap { $0 }.max()
                 result.append(Entry(url: url, size: size, isPackage: isPackage, lastUsed: used,
                                     device: Int(st.st_dev), inode: UInt64(st.st_ino)))
@@ -95,7 +108,8 @@ public struct LargeOldFilesModule: CleanupModule {
         let criteria = self.criteria
         let source = ScanSource(root: context.home, risk: .review, accessGroup: "Personal folders") { _ in
             let oldCutoff = criteria.unusedFor.map { context.now().addingTimeInterval(-$0) }
-            return try PersonalFolders.entries(context)
+            let floor = criteria.unusedFor == nil ? criteria.minimumBytes : min(criteria.minimumBytes, criteria.oldMinimumBytes)
+            return try PersonalFolders.entries(context, minimumBytes: floor)
                 .filter { entry in
                     if entry.size >= criteria.minimumBytes { return true }
                     if let oldCutoff, entry.size >= criteria.oldMinimumBytes, let used = entry.lastUsed, used < oldCutoff { return true }

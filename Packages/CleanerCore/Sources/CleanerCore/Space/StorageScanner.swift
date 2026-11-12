@@ -178,7 +178,13 @@ public struct StorageScanner: Sendable {
             if files % 5000 == 0 { progress(files) }
         }
 
-        let keys: [URLResourceKey] = [.isRegularFileKey, .totalFileAllocatedSizeKey]
+        let keys: [URLResourceKey] = [.isRegularFileKey, .isDirectoryKey, .isVolumeKey, .totalFileAllocatedSizeKey]
+        // Cloud-provider folders (Google Drive, OneDrive, Dropbox...) are
+        // network-backed: walking them is slow and not local disk usage.
+        let skipped = Set([
+            homePath + "/Library/CloudStorage",
+            homePath + "/Library/Mobile Documents",
+        ])
         func walk(_ root: URL, classify: (String) -> (StorageCategory, String)) {
             guard let enumerator = FileManager.default.enumerator(
                 at: root, includingPropertiesForKeys: keys, options: [],
@@ -186,7 +192,15 @@ public struct StorageScanner: Sendable {
             ) else { return }
             while let url = enumerator.nextObject() as? URL {
                 if Task.isCancelled { return }
-                guard let values = try? url.resourceValues(forKeys: Set(keys)), values.isRegularFile == true else { continue }
+                guard let values = try? url.resourceValues(forKeys: Set(keys)) else { continue }
+                if values.isDirectory == true {
+                    // Don't cross into other volumes or cloud folders.
+                    if values.isVolume == true || skipped.contains(url.path(percentEncoded: false)) {
+                        enumerator.skipDescendants()
+                    }
+                    continue
+                }
+                guard values.isRegularFile == true else { continue }
                 let path = url.path(percentEncoded: false)
                 record(path, bytes: Int64(values.totalFileAllocatedSize ?? 0), as: classify(path))
             }

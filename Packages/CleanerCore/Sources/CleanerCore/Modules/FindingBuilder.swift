@@ -59,18 +59,15 @@ struct FindingBuilder: Sendable {
         )
     }
 
-    /// Measures many candidates concurrently.
+    /// Measures many candidates, a few at a time.
     func makeAll(_ candidates: [(url: URL, group: String)]) async -> [Finding] {
-        await withTaskGroup(of: Finding?.self) { group in
-            for candidate in candidates {
-                group.addTask { make(candidate.url, group: candidate.group) }
-            }
-            var findings: [Finding] = []
-            for await finding in group {
-                if let finding { findings.append(finding) }
-            }
-            return findings.sorted { $0.reclaimableBytes > $1.reclaimableBytes }
-        }
+        var findings: [Finding] = []
+        await ScanLimits.run(candidates, work: { candidate in
+            make(candidate.url, group: candidate.group)
+        }, onResult: { finding in
+            if let finding { findings.append(finding) }
+        })
+        return findings.sorted { $0.reclaimableBytes > $1.reclaimableBytes }
     }
 
     static func isPermissionError(_ error: Error) -> Bool {

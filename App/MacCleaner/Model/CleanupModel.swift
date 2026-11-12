@@ -12,7 +12,10 @@ final class CleanupModel {
     enum Phase: Equatable { case idle, scanning, ready, cleaning }
 
     private(set) var phase: Phase = .idle
-    private(set) var findings: [CleanupCategory: [Finding]] = [:]
+    private(set) var findings: [CleanupCategory: [Finding]] = [:] {
+        didSet { findingIndex = nil }
+    }
+    @ObservationIgnored private var findingIndex: [UUID: Finding]?
     private(set) var loadedCategories: Set<CleanupCategory> = []
     private(set) var lastScanDate: Date?
     var selection: Set<UUID> = []
@@ -44,16 +47,13 @@ final class CleanupModel {
         let modules = ModuleRegistry.standard(context: settings.makeContext())
 
         scanTask = Task {
-            await withTaskGroup(of: (CleanupCategory, [Finding]).self) { group in
-                for module in modules {
-                    group.addTask { (module.category, await module.scan()) }
-                }
-                for await (category, items) in group {
-                    guard !Task.isCancelled else { continue }
-                    findings[category] = items
-                    loadedCategories.insert(category)
-                    selection.formUnion(items.filter(\.isSelectedByDefault).map(\.id))
-                }
+            await ScanLimits.run(modules) { module in
+                (module.category, await module.scan())
+            } onResult: { [self] (category, items) in
+                guard !Task.isCancelled else { return }
+                findings[category] = items
+                loadedCategories.insert(category)
+                selection.formUnion(items.filter(\.isSelectedByDefault).map(\.id))
             }
             if !Task.isCancelled {
                 lastScanDate = Date()
@@ -88,7 +88,13 @@ final class CleanupModel {
         items.filter { $0.skipReason == nil }.reduce(0) { $0 + $1.reclaimableBytes }
     }
 
-    func finding(_ id: UUID) -> Finding? { allFindings.first { $0.id == id } }
+    /// O(1) after the first call; rebuilt only when `findings` changes.
+    func finding(_ id: UUID) -> Finding? {
+        if findingIndex == nil {
+            findingIndex = Dictionary(allFindings.map { ($0.id, $0) }, uniquingKeysWith: { a, _ in a })
+        }
+        return findingIndex?[id]
+    }
 
     var selectedFindings: [Finding] { allFindings.filter { selection.contains($0.id) && isSelectable($0) } }
     var selectedBytes: Int64 { selectedFindings.reduce(0) { $0 + $1.reclaimableBytes } }

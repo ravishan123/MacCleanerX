@@ -23,9 +23,9 @@ public struct DuplicatesModule: CleanupModule {
     public func scan() async -> [Finding] {
         let context = support.context
         let minimum = minimumBytes
-        guard let entries = try? PersonalFolders.entries(context) else {
+        guard let entries = try? PersonalFolders.entries(context, minimumBytes: minimum) else {
             return await support.scan([ScanSource(root: context.home, risk: .review, accessGroup: "Personal folders") { _ in
-                _ = try PersonalFolders.entries(context)
+                _ = try PersonalFolders.entries(context, minimumBytes: minimum)
                 return []
             }])
         }

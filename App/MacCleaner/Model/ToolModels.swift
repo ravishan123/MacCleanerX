@@ -14,6 +14,7 @@ final class FindingsTool {
     var selection: Set<UUID> = []
     let cleanup: CleanupModel
     private var task: Task<Void, Never>?
+    private var generation = 0
 
     init(cleanup: CleanupModel) {
         self.cleanup = cleanup
@@ -24,17 +25,28 @@ final class FindingsTool {
         phase = .scanning
         findings = []
         selection = []
-        task = Task {
-            let result = await Task.detached(priority: .userInitiated) { await work() }.value
+        generation += 1
+        let mine = generation
+        // The detached task itself is stored, so cancel() really reaches the
+        // file-system walk (a detached task ignores its parent's cancellation).
+        task = Task.detached(priority: .userInitiated) { [weak self] in
+            let result = await work()
             guard !Task.isCancelled else { return }
-            findings = result
-            selection = Set(result.filter(\.isSelectedByDefault).map(\.id))
-            phase = .ready
+            await self?.finish(result, generation: mine)
         }
     }
 
+    private func finish(_ result: [Finding], generation mine: Int) {
+        guard mine == generation else { return }
+        findings = result
+        selection = Set(result.filter(\.isSelectedByDefault).map(\.id))
+        phase = .ready
+    }
+
     func cancel() {
+        generation += 1
         task?.cancel()
+        task = nil
         phase = findings.isEmpty ? .idle : .ready
     }
 
@@ -104,6 +116,7 @@ final class StorageModel {
     private(set) var phase: Phase = .idle
     var focused: StorageCategory?
     private var task: Task<Void, Never>?
+    private var generation = 0
 
     var isScanning: Bool {
         if case .scanning = phase { return true }
@@ -112,18 +125,23 @@ final class StorageModel {
 
     func scan() {
         task?.cancel()
+        generation += 1
+        let mine = generation
         phase = .scanning(files: 0)
         let scanner = StorageScanner.live()
-        task = Task {
-            let report = await Task.detached(priority: .userInitiated) {
-                await scanner.scan { files in
-                    Task { @MainActor in self.progress(files) }
-                }
-            }.value
+        task = Task.detached(priority: .userInitiated) { [weak self] in
+            let report = await scanner.scan { files in
+                Task { @MainActor in self?.progress(files) }
+            }
             guard !Task.isCancelled else { return }
-            focused = focused ?? report.sortedCategories.first
-            phase = .ready(report)
+            await self?.finish(report, generation: mine)
         }
+    }
+
+    private func finish(_ report: StorageReport, generation mine: Int) {
+        guard mine == generation else { return }
+        focused = focused ?? report.sortedCategories.first
+        phase = .ready(report)
     }
 
     private func progress(_ files: Int) {
@@ -131,7 +149,9 @@ final class StorageModel {
     }
 
     func cancel() {
+        generation += 1
         task?.cancel()
+        task = nil
         phase = .idle
     }
 }

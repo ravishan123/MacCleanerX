@@ -57,7 +57,7 @@ flowchart LR
         YML["project.yml"] -->|"xcodegen generate"| XP["MacCleaner.xcodeproj<br/>(generated, not committed)"]
         APPSRC["App/MacCleaner<br/>SwiftUI"] --> XP
         PKG["Packages/CleanerCore<br/>Swift package"] --> XP
-        TESTS["CleanerCoreTests<br/>131 tests"] -.->|"swift test"| PKG
+        TESTS["CleanerCoreTests<br/>134 tests"] -.->|"swift test"| PKG
         SCRIPTS["scripts/<br/>make-dmg.sh · make-icon.swift"]
         WF[".github/workflows<br/>ci.yml · release.yml"]
         DOCS["docs/<br/>guides · diagrams · website"]

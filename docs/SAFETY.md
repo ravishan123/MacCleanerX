@@ -123,7 +123,7 @@ Permanent deletion of an app is always refused, even if requested.
 
 ## How it is tested
 
-- **131 Swift Testing tests** in `Packages/CleanerCore/Tests`. They only touch throwaway folders under `$TMPDIR` and use a **fake Trash**. `ModuleContext` has no default file operations, so a test can't reach the real Trash by accident.
+- **134 Swift Testing tests** in `Packages/CleanerCore/Tests`. They only touch throwaway folders under `$TMPDIR` and use a **fake Trash**. `ModuleContext` has no default file operations, so a test can't reach the real Trash by accident.
 - **SafetyGuard tests** cover path traversal, symlink escapes (absolute, relative, through a symlinked parent, to `/`, `/System`, `/Library` and the home folder), the home folder and its parents, `/System`, `/Library`, other system paths, an empty or invalid allowlist, SIP flags, and files swapped after the scan.
 - **"Scan changes nothing":** these tests snapshot the fixture tree before and after each scan.
 - **Mutation checks:** each key rule was disabled on purpose to confirm a test fails. That was done for symlink targets, revalidation, the 10-minute rule, hard-link accounting, the last-copy rule, the running-app rule and app permanent deletion.

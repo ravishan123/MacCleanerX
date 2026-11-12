@@ -116,35 +116,40 @@ public struct ScanOrchestrator: Sendable {
         var security: SecurityReport?
         var performance: PerformanceReport?
 
-        await withTaskGroup(of: Partial.self) { group in
-            for module in modules {
-                group.addTask { .junk(module.category, await module.scan()) }
-            }
-            if scope.contains(.malware) {
-                group.addTask { .security(await securityScan()) }
-            }
-            if scope.contains(.performance) {
-                group.addTask { .performance(await performanceScan()) }
-            }
-
-            var completed = 0
-            for await partial in group {
-                completed += 1
-                let component: ScanComponent
-                switch partial {
-                case .junk(let category, let findings):
-                    junk[category, default: []] += findings
-                    component = .cleanup(category)
-                case .security(let report):
-                    security = report
-                    component = .security
-                case .performance(let report):
-                    performance = report
-                    component = .performance
-                }
-                progress(ScanProgress(completed: completed, total: total, justFinished: component))
-            }
+        enum Job: Sendable {
+            case junk(any CleanupModule), security, performance
         }
+        var jobs: [Job] = []
+        // Start the quick checks first so progress moves right away.
+        if scope.contains(.malware) { jobs.append(.security) }
+        if scope.contains(.performance) { jobs.append(.performance) }
+        jobs += modules.map(Job.junk)
+
+        let securityScan = self.securityScan
+        let performanceScan = self.performanceScan
+        var completed = 0
+        await ScanLimits.run(jobs, work: { job -> Partial in
+            switch job {
+            case .junk(let module): .junk(module.category, await module.scan())
+            case .security: .security(await securityScan())
+            case .performance: .performance(await performanceScan())
+            }
+        }, onResult: { partial in
+            completed += 1
+            let component: ScanComponent
+            switch partial {
+            case .junk(let category, let findings):
+                junk[category, default: []] += findings
+                component = .cleanup(category)
+            case .security(let report):
+                security = report
+                component = .security
+            case .performance(let report):
+                performance = report
+                component = .performance
+            }
+            progress(ScanProgress(completed: completed, total: total, justFinished: component))
+        })
 
         let recommendations = RuleEngine.recommendations(junk: junk, security: security, performance: performance)
         return SmartCareReport(
