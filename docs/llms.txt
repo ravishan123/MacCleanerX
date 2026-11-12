@@ -1,0 +1,23 @@
+# Mac Cleaner
+
+> Mac Cleaner (also written MacCleanerX) is a free, open-source (MIT) macOS cleaner by Ravishan Lakshitha. It finds junk files, caches, large and duplicate files and app leftovers, uninstalls apps with their leftovers, and never removes anything without the user's confirmation. Items go to the Trash by default. No account, no analytics, no network use for scanning. Requires macOS 14 Sonoma or later, Apple silicon or Intel. Built with Swift 6 and SwiftUI.
+
+Key facts:
+- Price: free. License: MIT. Source: https://github.com/ravishan123/MacCleanerX
+- Not notarized by Apple (free project); first launch needs System Settings > Privacy & Security > Open Anyway.
+- Not antivirus. The startup check only flags common warning signs.
+- Deliberately excludes RAM boosters, language-file removal, app thinning, file shredding and cleaning inside Photos or Messages.
+
+## Use it
+- [Download latest release](https://github.com/ravishan123/MacCleanerX/releases/latest)
+- [Website](https://ravishan123.github.io/MacCleanerX/)
+
+## Docs
+- [User guide](https://github.com/ravishan123/MacCleanerX/blob/main/docs/USER_GUIDE.md): install, first launch, every screen, FAQ
+- [Safety design](https://github.com/ravishan123/MacCleanerX/blob/main/docs/SAFETY.md): what is and is not touched, how it is tested
+- [Architecture](https://github.com/ravishan123/MacCleanerX/blob/main/docs/ARCHITECTURE.md): layers and diagrams
+- [Development](https://github.com/ravishan123/MacCleanerX/blob/main/docs/DEVELOPMENT.md): build from source, tests
+- [Changelog](https://github.com/ravishan123/MacCleanerX/blob/main/CHANGELOG.md)
+
+## Author
+- Ravishan Lakshitha, https://github.com/ravishan123

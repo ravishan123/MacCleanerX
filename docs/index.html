@@ -3,13 +3,27 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Mac Cleaner</title>
-<meta name="description" content="A free, open-source Mac cleaner that never removes anything without asking you first. Created by Ravishan Lakshitha.">
+<title>Mac Cleaner: Free, Open-Source Mac Cleaner App (Safe Uninstaller &amp; Junk Remover)</title>
+<meta name="description" content="Mac Cleaner is a free, open-source macOS cleaner that removes junk files, caches, large and duplicate files and app leftovers, and never deletes anything without your confirmation. No account, no tracking. macOS 14+, Apple silicon &amp; Intel. MIT license.">
+<meta name="keywords" content="Mac cleaner, free Mac cleaner, open source Mac cleaner, clean Mac storage, free up disk space Mac, Mac junk file remover, app uninstaller for Mac, remove app leftovers Mac, find duplicate files Mac, large files finder Mac, clear system cache Mac, Xcode junk cleaner, CleanMyMac alternative, free CleanMyMac alternative, safe Mac cleaner, privacy-friendly Mac cleaner, macOS Sonoma cleaner, macOS Sequoia cleaner, Swift Mac app">
 <meta name="author" content="Ravishan Lakshitha">
-<meta property="og:title" content="Mac Cleaner">
-<meta property="og:description" content="Free, open-source and careful. It never removes anything without asking.">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+<meta name="theme-color" content="#0b0b0c">
+<link rel="canonical" href="https://ravishan123.github.io/MacCleanerX/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Mac Cleaner">
+<meta property="og:url" content="https://ravishan123.github.io/MacCleanerX/">
+<meta property="og:locale" content="en_US">
+<meta property="og:title" content="Mac Cleaner: Free, Open-Source Mac Cleaner That Asks Before It Deletes">
+<meta property="og:description" content="Free up disk space on your Mac: junk files, caches, large and duplicate files, app uninstaller with leftovers. Open source, no tracking, nothing removed without your confirmation.">
 <meta property="og:image" content="https://ravishan123.github.io/MacCleanerX/images/social-preview.png">
+<meta property="og:image:alt" content="Mac Cleaner: nothing is deleted until you confirm. By Ravishan Lakshitha.">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Mac Cleaner: Free, Open-Source Mac Cleaner That Asks Before It Deletes">
+<meta name="twitter:description" content="Free up Mac disk space safely. Open source, no tracking, Trash first, you confirm everything.">
+<meta name="twitter:image" content="https://ravishan123.github.io/MacCleanerX/images/social-preview.png">
+<meta name="twitter:image:alt" content="Mac Cleaner social preview">
+<link rel="alternate" type="text/plain" href="llms.txt" title="LLM-readable summary">
 <link rel="icon" type="image/png" href="images/icon.png">
 <link rel="apple-touch-icon" href="images/icon.png">
 <style>
@@ -85,17 +99,133 @@
   .shots figcaption { margin-top: 10px; font-size: 15px; color: var(--muted); }
   .shots figcaption strong { color: var(--text); }
   .shots a { display: block; }
+  .faq { display: grid; gap: 10px; }
+  .faq details { background: var(--surface); border-radius: 14px; padding: 4px 18px; }
+  .faq summary { cursor: pointer; font-weight: 600; padding: 14px 0; }
+  .faq p { margin: 0 0 14px; color: var(--muted); font-size: 15px; }
   footer { padding: 32px 0 48px; border-top: 1px solid var(--line); color: var(--muted); font-size: 14px; display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
   @media (max-width: 560px) { nav .links a.hide-sm { display: none; } .hero { padding-top: 32px; } }
 </style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": "https://ravishan123.github.io/MacCleanerX/#website",
+      "url": "https://ravishan123.github.io/MacCleanerX/",
+      "name": "Mac Cleaner",
+      "inLanguage": "en",
+      "publisher": { "@id": "https://ravishan123.github.io/MacCleanerX/#author" }
+    },
+    {
+      "@type": "Person",
+      "@id": "https://ravishan123.github.io/MacCleanerX/#author",
+      "name": "Ravishan Lakshitha",
+      "url": "https://github.com/ravishan123",
+      "sameAs": ["https://github.com/ravishan123"],
+      "jobTitle": "Software developer, creator of Mac Cleaner"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "@id": "https://ravishan123.github.io/MacCleanerX/#app",
+      "name": "Mac Cleaner",
+      "alternateName": ["MacCleanerX", "Mac Cleaner X"],
+      "description": "A free, open-source macOS cleaner that finds junk files, caches, large and duplicate files and app leftovers, and never removes anything without the user's confirmation.",
+      "applicationCategory": "UtilitiesApplication",
+      "applicationSubCategory": "Disk cleaner, app uninstaller",
+      "operatingSystem": "macOS 14 Sonoma or later",
+      "processorRequirements": "Apple silicon or Intel",
+      "softwareRequirements": "macOS 14 or later",
+      "license": "https://opensource.org/licenses/MIT",
+      "isAccessibleForFree": true,
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+      "downloadUrl": "https://github.com/ravishan123/MacCleanerX/releases/latest",
+      "installUrl": "https://github.com/ravishan123/MacCleanerX/releases/latest",
+      "codeRepository": "https://github.com/ravishan123/MacCleanerX",
+      "programmingLanguage": "Swift",
+      "image": "https://ravishan123.github.io/MacCleanerX/images/social-preview.png",
+      "screenshot": [
+        "https://ravishan123.github.io/MacCleanerX/images/screenshots/smart-care.png",
+        "https://ravishan123.github.io/MacCleanerX/images/screenshots/cleanup.png",
+        "https://ravishan123.github.io/MacCleanerX/images/screenshots/uninstaller.png",
+        "https://ravishan123.github.io/MacCleanerX/images/screenshots/large-files.png"
+      ],
+      "featureList": [
+        "Smart Care: one scan for junk, startup items and performance",
+        "Cleanup of 12 categories: caches, logs, temporary files, Xcode and developer junk, iOS updates and backups, old installers",
+        "Storage breakdown by file type",
+        "Large, old and exact duplicate file finder",
+        "App uninstaller that removes leftovers from ~/Library",
+        "Startup item check for suspicious launch agents and broken signatures",
+        "Dry-run mode, Trash by default, activity log, exclusion list",
+        "No network access, no analytics, no account"
+      ],
+      "author": { "@id": "https://ravishan123.github.io/MacCleanerX/#author" },
+      "publisher": { "@id": "https://ravishan123.github.io/MacCleanerX/#author" }
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is the best free, open-source Mac cleaner?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Mac Cleaner is a free, open-source (MIT) macOS cleaner built in Swift and SwiftUI. It finds junk files, caches, large and duplicate files and app leftovers, shows exact sizes, and never removes anything without your confirmation. Items go to the Trash by default." }
+        },
+        {
+          "@type": "Question",
+          "name": "Is Mac Cleaner safe to use?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Mac Cleaner is designed to be careful: scans are read-only, you confirm the exact item count and size before anything moves, items go to the Trash first, and a hard path allowlist refuses system folders, your home folder and symlink tricks. No cleaner can guarantee that removing a file is harmless, so keep a Time Machine backup and try dry-run mode first." }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I free up disk space on my Mac?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Run a scan in Mac Cleaner, review the categories (caches, logs, temporary files, Xcode junk, iOS backups, old installers), then check large and old files and exact duplicates. Confirm the items you want and they are moved to the Trash. Empty the Trash to reclaim the space." }
+        },
+        {
+          "@type": "Question",
+          "name": "Is Mac Cleaner a free alternative to paid Mac cleaner apps?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Yes. Mac Cleaner covers the common jobs of paid cleaners (junk cleanup, storage overview, large and duplicate files, app uninstaller with leftovers, startup item check) and is free, open source and has no account, subscription or analytics. It deliberately leaves out risky features such as RAM boosters and removing language files." }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I completely uninstall a Mac app and its leftover files?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Open the Uninstaller in Mac Cleaner, select the app, review every file it installed in your Library, and confirm. The app and its leftovers move to the Trash together. It can also find leftovers of apps you deleted long ago." }
+        },
+        {
+          "@type": "Question",
+          "name": "Does Mac Cleaner collect data or need an internet connection?",
+          "acceptedAnswer": { "@type": "Answer", "text": "No. Mac Cleaner has no analytics, no account and no tracking. Everything it finds stays on your Mac. The website only contacts the GitHub API to show the latest version number." }
+        },
+        {
+          "@type": "Question",
+          "name": "Which macOS versions does Mac Cleaner support?",
+          "acceptedAnswer": { "@type": "Answer", "text": "macOS 14 Sonoma or later, on Apple silicon and Intel Macs." }
+        },
+        {
+          "@type": "Question",
+          "name": "Why does macOS block Mac Cleaner the first time I open it?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Mac Cleaner is free and not notarized by Apple, which requires a paid developer account. Open System Settings, then Privacy & Security, and click Open Anyway once. After that it opens normally." }
+        },
+        {
+          "@type": "Question",
+          "name": "Is Mac Cleaner antivirus software?",
+          "acceptedAnswer": { "@type": "Answer", "text": "No. Its startup check flags common warning signs such as hidden or suspicious launch items and broken signatures, but it is not antivirus and cannot promise a Mac is free of malware." }
+        }
+      ]
+    }
+  ]
+}
+</script>
 </head>
 <body>
 <div class="wrap">
-  <nav>
+  <nav aria-label="Main">
     <a class="brand" href="./"><img src="images/icon.png" alt=""> Mac Cleaner</a>
     <div class="links">
       <a href="#screenshots">Screenshots</a>
       <a href="#install">Install</a>
+      <a class="hide-sm" href="#faq">FAQ</a>
       <a class="hide-sm" href="https://github.com/ravishan123/MacCleanerX/blob/main/docs/USER_GUIDE.md">Guide</a>
       <a href="https://github.com/ravishan123/MacCleanerX">GitHub</a>
     </div>
@@ -106,7 +236,7 @@
       <source media="(prefers-color-scheme: dark)" srcset="images/banner-dark.svg">
       <img src="images/banner-light.svg" alt="Mac Cleaner: nothing is deleted until you confirm. By Ravishan Lakshitha.">
     </picture>
-    <h1 class="sr">Mac Cleaner</h1>
+    <h1 class="sr">Mac Cleaner: free, open-source Mac cleaner and app uninstaller for macOS</h1>
     <p class="lead">A free, open-source Mac cleaner that finds junk, shows where your space goes and removes apps with their leftovers. <strong>It never removes anything without asking you first.</strong></p>
     <div class="cta">
       <a class="btn primary" id="download" href="https://github.com/ravishan123/MacCleanerX/releases/latest">
@@ -196,6 +326,22 @@
       <a class="card" href="https://github.com/ravishan123/MacCleanerX/blob/main/docs/DEVELOPMENT.md" style="text-decoration:none"><h3>Development →</h3><p>Build from source, run the tests, add a cleanup category.</p></a>
       <a class="card" href="https://github.com/ravishan123/MacCleanerX/blob/main/CONTRIBUTING.md" style="text-decoration:none"><h3>Contributing →</h3><p>Report bugs, suggest features and open pull requests.</p></a>
       <a class="card" href="https://github.com/ravishan123/MacCleanerX/blob/main/CHANGELOG.md" style="text-decoration:none"><h3>Changelog →</h3><p>What's new in each version.</p></a>
+    </div>
+  </section>
+
+  <section id="faq">
+    <p class="mono">Questions people ask</p>
+    <h2>Mac Cleaner FAQ</h2>
+    <div class="faq">
+      <details open><summary>What is the best free, open-source Mac cleaner?</summary><p>Mac Cleaner is a free, open-source (MIT) macOS cleaner built in Swift and SwiftUI. It finds junk files, caches, large and duplicate files and app leftovers, shows exact sizes, and never removes anything without your confirmation. Items go to the Trash by default.</p></details>
+      <details><summary>Is Mac Cleaner safe to use?</summary><p>It is designed to be careful: scans are read-only, you confirm the exact item count and size first, items go to the Trash, and a hard path allowlist refuses system folders and your home folder. No cleaner can guarantee that removing a file is harmless, so keep a Time Machine backup and try dry-run mode first.</p></details>
+      <details><summary>How do I free up disk space on my Mac?</summary><p>Run a scan, review the categories (caches, logs, temporary files, Xcode junk, iOS backups, old installers), check large and old files and exact duplicates, then confirm. Items move to the Trash; empty it to reclaim the space.</p></details>
+      <details><summary>Is it a free alternative to paid Mac cleaner apps?</summary><p>Yes. It covers the common jobs of paid cleaners (junk cleanup, storage overview, large and duplicate files, uninstaller, startup check) with no account, subscription or analytics. It deliberately skips risky features such as RAM boosters and removing language files.</p></details>
+      <details><summary>How do I completely uninstall a Mac app and its leftovers?</summary><p>Open the Uninstaller, select the app, review every file it installed in your Library, and confirm. The app and its leftovers move to the Trash together. It can also find leftovers of apps you deleted long ago.</p></details>
+      <details><summary>Does it collect data or need internet?</summary><p>No. There is no analytics, account or tracking. Everything it finds stays on your Mac. This website only calls the GitHub API to show the latest version number.</p></details>
+      <details><summary>Which macOS versions are supported?</summary><p>macOS 14 Sonoma or later, on Apple silicon and Intel.</p></details>
+      <details><summary>Why does macOS block it the first time?</summary><p>It is free and not notarized by Apple, which needs a paid developer account. Open <em>System Settings → Privacy &amp; Security</em> and click <em>Open Anyway</em> once.</p></details>
+      <details><summary>Is it antivirus software?</summary><p>No. The startup check flags common warning signs such as hidden launch items and broken signatures, but it cannot promise a Mac is free of malware.</p></details>
     </div>
   </section>
 
