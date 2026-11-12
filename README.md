@@ -1,28 +1,37 @@
 <p align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="docs/images/banner-dark.svg">
-    <img alt="Mac Cleaner" src="docs/images/banner-light.svg" width="100%">
-  </picture>
+  <img src="docs/images/icon.png" width="160" alt="Mac Cleaner icon">
+</p>
+
+<h1 align="center">Mac Cleaner</h1>
+
+<p align="center">
+  <b>A free, open-source Mac cleaner that never removes anything without asking you first.</b><br>
+  Created by <a href="https://github.com/ravishan123">Ravishan Lakshitha</a>
 </p>
 
 <p align="center">
-  <a href="https://github.com/ravishan123/MacCleaner/releases/latest"><img alt="Download" src="https://img.shields.io/github/v/release/ravishan123/MacCleaner?label=download&color=000000"></a>
-  <a href="https://github.com/ravishan123/MacCleaner/actions/workflows/ci.yml"><img alt="CI" src="https://github.com/ravishan123/MacCleaner/actions/workflows/ci.yml/badge.svg"></a>
+  <a href="https://github.com/ravishan123/MacCleanerX/releases/latest"><img alt="Download" src="https://img.shields.io/github/v/release/ravishan123/MacCleanerX?label=download&color=000000"></a>
+  <a href="https://github.com/ravishan123/MacCleanerX/actions/workflows/ci.yml"><img alt="CI" src="https://github.com/ravishan123/MacCleanerX/actions/workflows/ci.yml/badge.svg"></a>
   <img alt="macOS 14+" src="https://img.shields.io/badge/macOS-14%2B-000000">
   <img alt="Swift 6" src="https://img.shields.io/badge/Swift-6-000000">
   <a href="LICENSE"><img alt="MIT License" src="https://img.shields.io/badge/license-MIT-000000"></a>
 </p>
 
-# Mac Cleaner
+<p align="center">
+  <a href="https://github.com/ravishan123/MacCleanerX/releases/latest"><b>⬇ Download for Mac</b></a> ·
+  <a href="https://ravishan123.github.io/MacCleanerX/">Website</a> ·
+  <a href="docs/USER_GUIDE.md">User guide</a> ·
+  <a href="docs/ARCHITECTURE.md">Architecture</a>
+</p>
 
-A free, open-source Mac cleaner that finds junk, shows where your disk space goes, removes apps with their leftovers, and checks startup items for warning signs. **It never removes anything without asking you first.**
+Mac Cleaner finds junk, shows where your disk space goes, removes apps with their leftovers, and checks startup items for warning signs. **It never removes anything without asking you first.**
 
 > [!WARNING]
 > **Use at your own risk.** Mac Cleaner only touches your own files, moves items to the Trash by default and asks before every cleanup, but no cleaner can guarantee that removing a file is harmless. Keep a backup (for example with Time Machine). The malware check looks for common warning signs; it is **not antivirus software** and cannot promise your Mac is free of malware.
 
 ## Download
 
-**[⬇ Download the latest version](https://github.com/ravishan123/MacCleaner/releases/latest)**: get `MacCleaner-<version>.dmg`, open it and drag **Mac Cleaner** to **Applications**.
+**[⬇ Download the latest version](https://github.com/ravishan123/MacCleanerX/releases/latest)**: get `MacCleaner-<version>.dmg`, open it and drag **Mac Cleaner** to **Applications**.
 
 Mac Cleaner is free and not notarized by Apple (that needs a paid developer account), so the first time you open it macOS blocks it. **[Follow these four steps once](docs/USER_GUIDE.md#first-launch-open-anyway)** to allow it. Then **[give it Full Disk Access](docs/USER_GUIDE.md#full-disk-access)** so it can check every folder.
 
@@ -64,6 +73,27 @@ flowchart LR
 
 Read the full **[safety design](docs/SAFETY.md)**.
 
+## How it's built
+
+```mermaid
+flowchart TB
+    subgraph APP["Mac Cleaner.app (SwiftUI)"]
+        direction LR
+        UI["Screens<br/>Smart Care · Cleanup · Storage<br/>Large & old · Duplicates · Uninstaller"] --> VM["@Observable models<br/>selection · confirmation"]
+    end
+    subgraph CORE["CleanerCore (Swift package, no UI, 131 tests)"]
+        direction LR
+        ORC["ScanOrchestrator<br/>+ RuleEngine"] --> MODS["16 cleanup modules<br/>security · performance"]
+        MODS --> RM["Remover"] --> SG["SafetyGuard<br/>path allowlist"]
+        DB[("SQLite (GRDB)<br/>activity log · exclusions")]
+    end
+    VM --> ORC
+    VM --> DB
+    SG --> MAC["macOS<br/>FileManager · Trash · libproc"]
+```
+
+All file-system logic lives in `CleanerCore`; the app is only UI. Every removal goes through one path (`Remover` → `SafetyGuard`). The **[architecture document](docs/ARCHITECTURE.md)** has use-case, component, sequence, class, state, database and deployment diagrams, and **[docs/DIAGRAMS.md](docs/DIAGRAMS.md)** lists every diagram in the project.
+
 ## Documentation
 
 | For users | For developers |
@@ -72,13 +102,14 @@ Read the full **[safety design](docs/SAFETY.md)**.
 | [Safety design](docs/SAFETY.md): what is and isn't touched | [Architecture](docs/ARCHITECTURE.md): diagrams of every layer |
 | [Changelog](CHANGELOG.md) | [Releasing](docs/RELEASING.md): build the `.dmg` and publish |
 | [Security policy](SECURITY.md) | [Contributing](CONTRIBUTING.md) · [Code of conduct](CODE_OF_CONDUCT.md) |
+| [Authors and credits](AUTHORS.md) | [All diagrams](docs/DIAGRAMS.md) |
 
 ## Build from source
 
 ```sh
 brew install xcodegen
-git clone https://github.com/ravishan123/MacCleaner.git
-cd MacCleaner
+git clone https://github.com/ravishan123/MacCleanerX.git
+cd MacCleanerX
 xcodegen generate
 open MacCleaner.xcodeproj           # press ⌘R
 
@@ -99,6 +130,16 @@ Details in the [development guide](docs/DEVELOPMENT.md).
 
 Bug reports, ideas and pull requests are welcome. Start with [CONTRIBUTING.md](CONTRIBUTING.md). Found a way Mac Cleaner could remove something it shouldn't? Please follow the [security policy](SECURITY.md) instead of opening a public issue.
 
+## Author
+
+<a href="https://github.com/ravishan123"><img src="https://github.com/ravishan123.png?size=120" width="60" align="left" alt="Ravishan Lakshitha" style="border-radius:50%"></a>
+
+**Ravishan Lakshitha** ([@ravishan123](https://github.com/ravishan123)): creator and maintainer. Designed and built Mac Cleaner, from the safety design and the cleaning engine to the app, its icon and these docs.
+
+<br clear="left">
+
+If Mac Cleaner helped you, please ⭐ **star the repo**; it helps other people find it. Full credits, contributors and third-party software are in [AUTHORS.md](AUTHORS.md).
+
 ## License
 
-[MIT](LICENSE). Uses [GRDB.swift](https://github.com/groue/GRDB.swift) (MIT).
+[MIT](LICENSE) © 2026 Ravishan Lakshitha and Mac Cleaner contributors. Uses [GRDB.swift](https://github.com/groue/GRDB.swift) (MIT).

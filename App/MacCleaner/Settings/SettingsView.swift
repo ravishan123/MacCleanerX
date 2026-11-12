@@ -266,7 +266,16 @@ private struct AboutView: View {
                 DotMatrixText(text: "MAC CLEANER", dotSize: 4)
                     .padding(.top, 28)
                 StatusLine(label: "Version", value: version)
-                Text("Open source under the MIT License.").font(Typo.body)
+                StatusLine(label: "Created by", value: "Ravishan Lakshitha")
+                Text("Open source under the MIT License. Designed and developed by Ravishan Lakshitha, with help from the Mac Cleaner contributors.")
+                    .font(Typo.body)
+                    .fixedSize(horizontal: false, vertical: true)
+                HStack(spacing: 8) {
+                    Link("Source code", destination: URL(string: "https://github.com/ravishan123/MacCleanerX")!)
+                    Link("Report an issue", destination: URL(string: "https://github.com/ravishan123/MacCleanerX/issues")!)
+                    Link("Developer on GitHub", destination: URL(string: "https://github.com/ravishan123")!)
+                }
+                .buttonStyle(.pillSmall)
                 Text("Use at your own risk. Mac Cleaner only touches your own files, moves items to the Trash by default and always asks before removing anything, but no cleaner can guarantee that removing a file is harmless. Keep a backup, for example with Time Machine.")
                     .font(.system(size: 12)).foregroundStyle(Theme.secondary)
                     .fixedSize(horizontal: false, vertical: true)

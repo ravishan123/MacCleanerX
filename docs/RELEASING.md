@@ -35,14 +35,15 @@ flowchart LR
    git tag v1.2.0
    git push origin main --tags
    ```
-6. The **Release** workflow tests, builds and publishes `MacCleaner-1.2.0.dmg` and `.sha256` to GitHub Releases.
+6. The **Release** workflow (`.github/workflows/release.yml`) tests, builds and publishes `MacCleaner-1.2.0.dmg` and `.sha256` to GitHub Releases. The release notes are that version's section of `CHANGELOG.md` plus the install steps in `docs/release-footer.md`.
+7. The [website](https://ravishan123.github.io/MacCleanerX/) picks up the new release by itself: its Download button asks the GitHub API for the latest `.dmg`.
 
 ### Publishing a locally built .dmg instead
 
 ```sh
 scripts/make-dmg.sh 1.2.0
 gh release create v1.2.0 build/MacCleaner-1.2.0.dmg build/MacCleaner-1.2.0.dmg.sha256 \
-  --title "Mac Cleaner 1.2.0" --notes-file CHANGELOG.md
+  --title "Mac Cleaner 1.2.0" --notes-file notes.md   # changelog section + docs/release-footer.md
 ```
 
 ## What make-dmg.sh does
@@ -52,6 +53,10 @@ gh release create v1.2.0 build/MacCleaner-1.2.0.dmg build/MacCleaner-1.2.0.dmg.s
 3. `codesign --force --deep --sign - --options runtime` (ad-hoc, hardened runtime), then `codesign --verify --deep --strict`
 4. Stages `Mac Cleaner.app` plus an `Applications` link in `build/dmg-stage`, and runs `hdiutil create -format UDZO`
 5. Writes `build/MacCleaner-<version>.dmg.sha256`
+
+## Website
+
+`docs/index.html` is served by GitHub Pages (Settings → Pages → *Deploy from a branch*, `main`, `/docs`). `docs/.nojekyll` makes Pages serve the files as they are.
 
 ## Notarization (optional, later)
 

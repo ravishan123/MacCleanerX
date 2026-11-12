@@ -6,7 +6,7 @@ Mac Cleaner removes files, so we treat any way to make it remove the wrong thing
 
 Please **don't open a public issue.** Use GitHub's private reporting instead:
 
-**[Report a vulnerability](https://github.com/ravishan123/MacCleaner/security/advisories/new)** (Security tab → *Report a vulnerability*)
+**[Report a vulnerability](https://github.com/ravishan123/MacCleanerX/security/advisories/new)** (Security tab → *Report a vulnerability*)
 
 Include the Mac Cleaner and macOS versions, the steps or files needed to reproduce it, and what was removed (or could be).
 

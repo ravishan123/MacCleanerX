@@ -1,0 +1,23 @@
+name: Feature request
+description: Suggest a feature or a new cleanup category
+labels: [enhancement]
+body:
+  - type: textarea
+    id: idea
+    attributes:
+      label: What would you like?
+      description: Describe the feature and the problem it solves.
+    validations:
+      required: true
+  - type: textarea
+    id: folders
+    attributes:
+      label: For a new cleanup category
+      description: |
+        - The exact folder(s) involved
+        - Why the files are safe to remove (who recreates them, and when)
+        - Should it be **Safe** or **Review**?
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Anything else?

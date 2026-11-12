@@ -17,8 +17,8 @@ Swift packages are fetched automatically: [GRDB.swift](https://github.com/groue/
 ## Build and run
 
 ```sh
-git clone https://github.com/ravishan123/MacCleaner.git
-cd MacCleaner
+git clone https://github.com/ravishan123/MacCleanerX.git
+cd MacCleanerX
 xcodegen generate              # re-run after adding or removing files
 open MacCleaner.xcodeproj      # scheme "MacCleaner", destination "My Mac", ⌘R
 ```
@@ -60,8 +60,11 @@ Packages/CleanerCore/            Swift package: everything else
   Sources/CleanerCore/
   Tests/CleanerCoreTests/
 scripts/make-dmg.sh              Universal build + .dmg + checksum
-.github/workflows/               CI and release
-docs/                            These documents
+scripts/make-icon.swift          Draws the app icon and README/website images
+.github/workflows/               CI (every push and PR) and release (on tag v*)
+.github/ISSUE_TEMPLATE/          Bug report and feature request forms
+docs/                            These documents, diagrams and images
+docs/index.html                  Download website (GitHub Pages, served from /docs)
 ```
 
 See [ARCHITECTURE.md](ARCHITECTURE.md) for diagrams and the full source map.
@@ -143,6 +146,16 @@ Accessibility checklist for new UI: every control needs a VoiceOver label; Safe/
 - Use typed throws (`throws(SafetyGuard.Rejection)`) for guards.
 - No force-unwraps in core code paths that touch files.
 - Write user-facing text in plain, honest language: "No known threats found", never "Your Mac is safe".
+
+## App icon
+
+The icon is drawn in code, so it can be tweaked and regenerated:
+
+```sh
+swift scripts/make-icon.swift
+```
+
+It writes every size into `AppIcon.appiconset`, plus `docs/images/icon.png` and `docs/images/social-preview.png` (upload that one in GitHub → Settings → Social preview).
 
 ## Debugging tips
 

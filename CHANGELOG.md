@@ -4,7 +4,7 @@ All notable changes are listed here. The format follows [Keep a Changelog](https
 
 ## [Unreleased]
 
-## [1.0.0] - 2026-11-11
+## [1.0.0] - 2026-11-12
 
 First public release.
 
@@ -21,6 +21,7 @@ First public release.
 - Full Disk Access onboarding, dark mode, VoiceOver labels and keyboard navigation.
 - Monochrome "Mono" design with dot-matrix type.
 - Universal, ad-hoc signed `.dmg` with SHA-256 checksum, built by GitHub Actions.
+- App icon (drawn in code by `scripts/make-icon.swift`), download website, author credits in Settings → About.
 
-[Unreleased]: https://github.com/ravishan123/MacCleaner/compare/v1.0.0...HEAD
-[1.0.0]: https://github.com/ravishan123/MacCleaner/releases/tag/v1.0.0
+[Unreleased]: https://github.com/ravishan123/MacCleanerX/compare/v1.0.0...HEAD
+[1.0.0]: https://github.com/ravishan123/MacCleanerX/releases/tag/v1.0.0

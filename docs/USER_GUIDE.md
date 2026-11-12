@@ -17,7 +17,7 @@
 
 ## Install
 
-1. Go to **[Releases](https://github.com/ravishan123/MacCleaner/releases/latest)** and download `MacCleaner-<version>.dmg`. Optionally also download `MacCleaner-<version>.dmg.sha256`.
+1. Go to **[Releases](https://github.com/ravishan123/MacCleanerX/releases/latest)** and download `MacCleaner-<version>.dmg`. Optionally also download `MacCleaner-<version>.dmg.sha256`.
 2. Optional: check the download hasn't been changed. In Terminal, in your Downloads folder:
    ```sh
    shasum -a 256 -c MacCleaner-<version>.dmg.sha256

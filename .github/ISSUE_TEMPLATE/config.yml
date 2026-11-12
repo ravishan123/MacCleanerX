@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Security problem (removes the wrong thing)
+    url: https://github.com/ravishan123/MacCleanerX/security/advisories/new
+    about: Report privately so it can be fixed before it's public.
+  - name: User guide and FAQ
+    url: https://github.com/ravishan123/MacCleanerX/blob/main/docs/USER_GUIDE.md
+    about: Install, "Open Anyway", Full Disk Access and every screen explained.

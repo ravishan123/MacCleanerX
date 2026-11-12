@@ -35,7 +35,7 @@ targets:
         GENERATE_INFOPLIST_FILE: YES
         INFOPLIST_KEY_CFBundleDisplayName: Mac Cleaner
         INFOPLIST_KEY_LSApplicationCategoryType: public.app-category.utilities
-        INFOPLIST_KEY_NSHumanReadableCopyright: "Open source under the MIT License."
+        INFOPLIST_KEY_NSHumanReadableCopyright: "© 2026 Ravishan Lakshitha. Open source under the MIT License."
         ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
         # v1: no sandbox, no privileged helper, ad-hoc signature only.
         ENABLE_APP_SANDBOX: NO

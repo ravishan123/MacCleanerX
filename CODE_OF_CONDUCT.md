@@ -24,7 +24,7 @@ We want participation in this project to be a harassment-free experience for eve
 
 Maintainers may remove, edit or reject comments, commits, code, issues and other contributions that don't follow this code, and may temporarily or permanently ban contributors for behaviour they find inappropriate.
 
-To report a problem, contact the maintainers privately through a [GitHub security advisory](https://github.com/ravishan123/MacCleaner/security/advisories/new) (it is private) or by messaging a maintainer on GitHub. All reports are reviewed promptly and kept confidential.
+To report a problem, contact the maintainers privately through a [GitHub security advisory](https://github.com/ravishan123/MacCleanerX/security/advisories/new) (it is private) or by messaging a maintainer on GitHub. All reports are reviewed promptly and kept confidential.
 
 ## Attribution
 

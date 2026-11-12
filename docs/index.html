@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mac Cleaner</title>
+<meta name="description" content="A free, open-source Mac cleaner that never removes anything without asking you first. Created by Ravishan Lakshitha.">
+<meta name="author" content="Ravishan Lakshitha">
+<meta property="og:title" content="Mac Cleaner">
+<meta property="og:description" content="Free, open-source and careful. It never removes anything without asking.">
+<meta property="og:image" content="https://ravishan123.github.io/MacCleanerX/images/social-preview.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" href="images/icon.png">
+<link rel="apple-touch-icon" href="images/icon.png">
+<style>
+  :root {
+    --bg: #ffffff; --surface: #f5f5f7; --text: #0b0b0c; --muted: #5c5c63;
+    --line: #e3e3e7; --accent: #d71921; --btn-bg: #0b0b0c; --btn-text: #ffffff;
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0b0b0c; --surface: #161618; --text: #f5f5f7; --muted: #a1a1a8;
+      --line: #2a2a2e; --accent: #ff3b44; --btn-bg: #f5f5f7; --btn-text: #0b0b0c;
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #0b0b0c; --surface: #161618; --text: #f5f5f7; --muted: #a1a1a8;
+    --line: #2a2a2e; --accent: #ff3b44; --btn-bg: #f5f5f7; --btn-text: #0b0b0c;
+    color-scheme: dark;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--text);
+    font: 17px/1.55 -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; }
+  .wrap { max-width: 1040px; margin: 0 auto; padding: 0 16px; }
+  .mono { font-family: ui-monospace, "SF Mono", Menlo, monospace; letter-spacing: .08em; text-transform: uppercase; font-size: 12px; color: var(--muted); }
+  nav { display: flex; justify-content: space-between; align-items: center; padding: 20px 0; }
+  nav .brand { display: flex; gap: 10px; align-items: center; font-weight: 600; text-decoration: none; }
+  nav .brand img { width: 32px; height: 32px; }
+  nav .links { display: flex; gap: 20px; }
+  nav .links a { text-decoration: none; color: var(--muted); font-size: 15px; }
+  nav .links a:hover { color: var(--text); }
+
+  .hero { text-align: center; padding: 56px 0 72px; }
+  .hero img { width: 180px; height: 180px; }
+  .hero h1 { font-size: clamp(40px, 8vw, 72px); line-height: 1.05; margin: 20px 0 14px; letter-spacing: -.02em; }
+  .hero p.lead { font-size: clamp(18px, 2.6vw, 22px); color: var(--muted); max-width: 620px; margin: 0 auto 32px; }
+  .cta { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+  .btn { display: inline-flex; align-items: center; gap: 10px; padding: 14px 26px; border-radius: 999px; font-weight: 600; text-decoration: none; border: 1px solid var(--line); }
+  .btn.primary { background: var(--btn-bg); color: var(--btn-text); border-color: var(--btn-bg); }
+  .btn:hover { opacity: .88; }
+  .btn svg { width: 18px; height: 18px; }
+  .meta { margin-top: 16px; }
+
+  section { padding: 64px 0; border-top: 1px solid var(--line); }
+  h2 { font-size: clamp(28px, 4vw, 36px); margin: 8px 0 28px; letter-spacing: -.01em; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
+  .card { background: var(--surface); border-radius: 18px; padding: 22px; }
+  .card h3 { margin: 0 0 6px; font-size: 18px; }
+  .card p { margin: 0; color: var(--muted); font-size: 15px; }
+  .dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--accent); margin-right: 8px; vertical-align: middle; }
+
+  ol.steps { list-style: none; counter-reset: s; padding: 0; margin: 0; display: grid; gap: 14px; }
+  ol.steps li { counter-increment: s; display: grid; grid-template-columns: 40px 1fr; gap: 14px; align-items: start; }
+  ol.steps li::before { content: counter(s); width: 34px; height: 34px; border-radius: 50%; background: var(--btn-bg); color: var(--btn-text); display: grid; place-items: center; font-weight: 700; font-size: 15px; }
+  ol.steps p { margin: 4px 0 0; color: var(--muted); font-size: 15px; }
+  code { font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: .9em; background: var(--surface); padding: 2px 6px; border-radius: 6px; overflow-wrap: anywhere; }
+  .note { margin-top: 24px; padding: 16px 18px; border-left: 3px solid var(--accent); background: var(--surface); border-radius: 8px; font-size: 15px; color: var(--muted); }
+
+  .author { display: flex; gap: 20px; align-items: center; flex-wrap: wrap; }
+  .author img { width: 84px; height: 84px; border-radius: 50%; background: var(--surface); }
+  .author h3 { margin: 0; font-size: 22px; }
+  .author p { margin: 4px 0 0; color: var(--muted); }
+
+  footer { padding: 32px 0 48px; border-top: 1px solid var(--line); color: var(--muted); font-size: 14px; display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+  @media (max-width: 560px) { nav .links a.hide-sm { display: none; } .hero { padding-top: 32px; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav>
+    <a class="brand" href="./"><img src="images/icon.png" alt=""> Mac Cleaner</a>
+    <div class="links">
+      <a href="#install">Install</a>
+      <a class="hide-sm" href="https://github.com/ravishan123/MacCleanerX/blob/main/docs/USER_GUIDE.md">Guide</a>
+      <a href="https://github.com/ravishan123/MacCleanerX">GitHub</a>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <img src="images/icon.png" alt="Mac Cleaner app icon">
+    <h1>Mac Cleaner</h1>
+    <p class="lead">A free, open-source Mac cleaner that finds junk, shows where your space goes and removes apps with their leftovers. <strong>It never removes anything without asking you first.</strong></p>
+    <div class="cta">
+      <a class="btn primary" id="download" href="https://github.com/ravishan123/MacCleanerX/releases/latest">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m0 0-5-5m5 5 5-5M4 20h16"/></svg>
+        <span id="download-label">Download for Mac</span>
+      </a>
+      <a class="btn" href="https://github.com/ravishan123/MacCleanerX">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.36-3.88-1.36-.52-1.33-1.28-1.69-1.28-1.69-1.04-.71.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.76 2.7 1.25 3.36.96.1-.75.4-1.25.73-1.54-2.56-.29-5.25-1.28-5.25-5.68 0-1.26.45-2.28 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.83 1.19 3.09 0 4.41-2.7 5.38-5.26 5.67.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5Z"/></svg>
+        View source code
+      </a>
+    </div>
+    <p class="meta mono" id="meta">macOS 14 Sonoma or later · Apple silicon &amp; Intel · MIT license</p>
+  </header>
+
+  <section id="features">
+    <p class="mono">What it does</p>
+    <h2>Everything a cleaner should do. Nothing it shouldn't.</h2>
+    <div class="grid">
+      <div class="card"><h3>Smart Care</h3><p>One scan checks junk, startup items and performance, then recommends what to do, labeled Safe or Review.</p></div>
+      <div class="card"><h3>Cleanup</h3><p>Twelve categories: caches, logs, temporary files, Xcode and developer junk, iOS updates and backups, old installers and more.</p></div>
+      <div class="card"><h3>Storage</h3><p>See what fills your disk, by type, with the largest items in each category.</p></div>
+      <div class="card"><h3>Large, old &amp; duplicate files</h3><p>Find big files you haven't opened in months, and exact copies confirmed byte for byte. One copy always stays.</p></div>
+      <div class="card"><h3>Uninstaller</h3><p>Remove an app together with the files it left in your Library, and find leftovers of apps you deleted long ago.</p></div>
+      <div class="card"><h3>Startup check</h3><p>Flags hidden or suspicious startup items and broken signatures. Honest wording: "No known threats found".</p></div>
+    </div>
+  </section>
+
+  <section id="safety">
+    <p class="mono">Built to be careful</p>
+    <h2>Your files stay yours.</h2>
+    <div class="grid">
+      <div class="card"><h3><span class="dot"></span>Scans change nothing</h3><p>Every scan is read-only. Tests compare every file before and after.</p></div>
+      <div class="card"><h3><span class="dot"></span>You confirm everything</h3><p>You see the exact number of items and the space before anything moves.</p></div>
+      <div class="card"><h3><span class="dot"></span>Trash first</h3><p>Items go to the Trash. Permanent deletion is off by default and asks twice.</p></div>
+      <div class="card"><h3><span class="dot"></span>A hard allowlist</h3><p>System folders, your home folder and symlink tricks are always refused, and every item is checked again right before removal.</p></div>
+      <div class="card"><h3><span class="dot"></span>No network, no tracking</h3><p>No analytics, no account. Everything Mac Cleaner finds stays on your Mac.</p></div>
+      <div class="card"><h3><span class="dot"></span>Open source</h3><p>Every line is on GitHub, with 131 tests and a published <a href="https://github.com/ravishan123/MacCleanerX/blob/main/docs/SAFETY.md">safety design</a>.</p></div>
+    </div>
+  </section>
+
+  <section id="install">
+    <p class="mono">Install in a minute</p>
+    <h2>How to install</h2>
+    <ol class="steps">
+      <li><div><strong>Download the .dmg</strong><p>Click <a href="#" onclick="document.getElementById('download').click();return false;">Download for Mac</a>, or get <code>MacCleaner-&lt;version&gt;.dmg</code> from <a href="https://github.com/ravishan123/MacCleanerX/releases/latest">Releases</a>.</p></div></li>
+      <li><div><strong>Drag to Applications</strong><p>Open the disk image and drag Mac Cleaner onto the Applications folder.</p></div></li>
+      <li><div><strong>Allow it once</strong><p>Mac Cleaner is free and not notarized by Apple, so macOS blocks it the first time. Open <em>System Settings → Privacy &amp; Security</em> and click <em>Open Anyway</em>. <a href="https://github.com/ravishan123/MacCleanerX/blob/main/docs/USER_GUIDE.md#first-launch-open-anyway">Step-by-step</a>.</p></div></li>
+      <li><div><strong>Give it Full Disk Access</strong><p>So it can check the Trash, Mail attachments and iOS backups. <a href="https://github.com/ravishan123/MacCleanerX/blob/main/docs/USER_GUIDE.md#full-disk-access">How</a>.</p></div></li>
+    </ol>
+    <div class="note"><strong>Use at your own risk.</strong> Mac Cleaner only touches your own files and asks before every cleanup, but no cleaner can guarantee that removing a file is harmless. Keep a backup, and try dry-run mode first. The startup check is not antivirus software.</div>
+  </section>
+
+  <section id="docs">
+    <p class="mono">Documentation</p>
+    <h2>Read the docs</h2>
+    <div class="grid">
+      <a class="card" href="https://github.com/ravishan123/MacCleanerX/blob/main/docs/USER_GUIDE.md" style="text-decoration:none"><h3>User guide →</h3><p>Install, first launch, every screen, keyboard shortcuts and FAQ.</p></a>
+      <a class="card" href="https://github.com/ravishan123/MacCleanerX/blob/main/docs/SAFETY.md" style="text-decoration:none"><h3>Safety design →</h3><p>Exactly what is and isn't touched, and how it's tested.</p></a>
+      <a class="card" href="https://github.com/ravishan123/MacCleanerX/blob/main/docs/ARCHITECTURE.md" style="text-decoration:none"><h3>Architecture →</h3><p>Diagrams of every layer, from SwiftUI to the file system.</p></a>
+      <a class="card" href="https://github.com/ravishan123/MacCleanerX/blob/main/docs/DEVELOPMENT.md" style="text-decoration:none"><h3>Development →</h3><p>Build from source, run the tests, add a cleanup category.</p></a>
+      <a class="card" href="https://github.com/ravishan123/MacCleanerX/blob/main/CONTRIBUTING.md" style="text-decoration:none"><h3>Contributing →</h3><p>Report bugs, suggest features and open pull requests.</p></a>
+      <a class="card" href="https://github.com/ravishan123/MacCleanerX/blob/main/CHANGELOG.md" style="text-decoration:none"><h3>Changelog →</h3><p>What's new in each version.</p></a>
+    </div>
+  </section>
+
+  <section id="author">
+    <p class="mono">Made by</p>
+    <div class="author">
+      <img src="https://github.com/ravishan123.png?size=200" alt="Ravishan Lakshitha">
+      <div>
+        <h3>Ravishan Lakshitha</h3>
+        <p>Creator and maintainer of Mac Cleaner · <a href="https://github.com/ravishan123">@ravishan123 on GitHub</a></p>
+        <p>If Mac Cleaner helped you, <a href="https://github.com/ravishan123/MacCleanerX">star it on GitHub</a> ⭐</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <span>© 2026 Ravishan Lakshitha · <a href="https://github.com/ravishan123/MacCleanerX/blob/main/LICENSE">MIT License</a></span>
+    <span>Not affiliated with Apple Inc.</span>
+  </footer>
+</div>
+
+<script>
+  // Point the Download button straight at the newest .dmg, if the GitHub API answers.
+  fetch("https://api.github.com/repos/ravishan123/MacCleanerX/releases/latest")
+    .then(function (r) { return r.ok ? r.json() : null; })
+    .then(function (rel) {
+      if (!rel) return;
+      var dmg = (rel.assets || []).find(function (a) { return /\.dmg$/.test(a.name); });
+      if (dmg) {
+        document.getElementById("download").href = dmg.browser_download_url;
+        var mb = (dmg.size / 1048576).toFixed(1);
+        document.getElementById("download-label").textContent = "Download " + rel.tag_name + " for Mac";
+        document.getElementById("meta").textContent =
+          rel.tag_name + " · " + mb + " MB · macOS 14 or later · Apple silicon & Intel · MIT license";
+      }
+    })
+    .catch(function () {});
+</script>
+</body>
+</html>
