@@ -31,6 +31,21 @@ Mac Cleaner finds junk, shows where your disk space goes, removes apps with thei
 > [!WARNING]
 > **Use at your own risk.** Mac Cleaner only touches your own files, moves items to the Trash by default and asks before every cleanup, but no cleaner can guarantee that removing a file is harmless. Keep a backup (for example with Time Machine). The malware check looks for common warning signs; it is **not antivirus software** and cannot promise your Mac is free of malware.
 
+## Screenshots
+
+See what Mac Cleaner looks like before you install it. These are real screens from the app, with no mock-ups.
+
+<p align="center">
+  <img src="docs/images/screenshots/smart-care.png" alt="Smart Care: one Scan button checks junk, warning signs and performance" width="100%">
+</p>
+
+| Cleanup | Uninstaller |
+|---|---|
+| <img src="docs/images/screenshots/cleanup.png" alt="Cleanup: choose what goes, grouped by category and app"> | <img src="docs/images/screenshots/uninstaller.png" alt="Uninstaller: remove apps with the files they leave behind"> |
+| **Choose what goes.** Twelve categories, grouped by app, with exact sizes. Items go to the Trash. | **Remove apps completely.** See every file an app installed before removing anything. |
+| <img src="docs/images/screenshots/large-files.png" alt="Large and old files: filter by size and last opened"> | <img src="docs/images/screenshots/settings.png" alt="Settings: dry-run mode, Trash by default, Full Disk Access"> |
+| **Large & old files.** Pick a size and how long since you opened them. Nothing is pre-selected. | **Settings.** Dry-run mode, Trash by default, exclusions and an activity log. |
+
 ## Download
 
 **[⬇ Download the latest version](https://github.com/ravishan123/MacCleanerX/releases/latest)**: get `MacCleaner-<version>.dmg`, open it and drag **Mac Cleaner** to **Applications**.

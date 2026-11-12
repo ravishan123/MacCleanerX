@@ -78,6 +78,13 @@
   .author h3 { margin: 0; font-size: 22px; }
   .author p { margin: 4px 0 0; color: var(--muted); }
 
+  .shots .main img, .shots figure img { display: block; width: 100%; height: auto; border-radius: 14px; border: 1px solid var(--line); background: #000; }
+  .shots .main { margin: 0 0 20px; }
+  .shots .grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+  .shots figure { margin: 0; }
+  .shots figcaption { margin-top: 10px; font-size: 15px; color: var(--muted); }
+  .shots figcaption strong { color: var(--text); }
+  .shots a { display: block; }
   footer { padding: 32px 0 48px; border-top: 1px solid var(--line); color: var(--muted); font-size: 14px; display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
   @media (max-width: 560px) { nav .links a.hide-sm { display: none; } .hero { padding-top: 32px; } }
 </style>
@@ -87,6 +94,7 @@
   <nav>
     <a class="brand" href="./"><img src="images/icon.png" alt=""> Mac Cleaner</a>
     <div class="links">
+      <a href="#screenshots">Screenshots</a>
       <a href="#install">Install</a>
       <a class="hide-sm" href="https://github.com/ravishan123/MacCleanerX/blob/main/docs/USER_GUIDE.md">Guide</a>
       <a href="https://github.com/ravishan123/MacCleanerX">GitHub</a>
@@ -112,6 +120,33 @@
     </div>
     <p class="meta mono" id="meta">macOS 14 Sonoma or later · Apple silicon &amp; Intel · MIT license</p>
   </header>
+
+  <section id="screenshots" class="shots">
+    <p class="mono">See it first</p>
+    <h2>What it looks like before you install.</h2>
+    <figure class="main">
+      <a href="images/screenshots/smart-care.png"><img src="images/screenshots/smart-care.png" alt="Smart Care screen with a large Scan button and three checks: system junk, malware, performance" loading="lazy"></a>
+      <figcaption><strong>Smart Care.</strong> One Scan button checks junk, warning signs and performance. A scan only looks; nothing changes until you confirm.</figcaption>
+    </figure>
+    <div class="grid2">
+      <figure>
+        <a href="images/screenshots/cleanup.png"><img src="images/screenshots/cleanup.png" alt="Cleanup screen listing categories with sizes and caches grouped by app" loading="lazy"></a>
+        <figcaption><strong>Cleanup.</strong> Twelve categories, grouped by app, with exact sizes. Items go to the Trash.</figcaption>
+      </figure>
+      <figure>
+        <a href="images/screenshots/uninstaller.png"><img src="images/screenshots/uninstaller.png" alt="Uninstaller screen listing installed apps with versions and sizes" loading="lazy"></a>
+        <figcaption><strong>Uninstaller.</strong> See everything an app installed, then remove it together with its leftovers.</figcaption>
+      </figure>
+      <figure>
+        <a href="images/screenshots/large-files.png"><img src="images/screenshots/large-files.png" alt="Large and old files screen with size and last-opened filters" loading="lazy"></a>
+        <figcaption><strong>Large &amp; old files.</strong> Pick a size and how long since you opened them. Nothing is pre-selected.</figcaption>
+      </figure>
+      <figure>
+        <a href="images/screenshots/settings.png"><img src="images/screenshots/settings.png" alt="Settings screen with dry-run mode, default action Move to Trash and Full Disk Access" loading="lazy"></a>
+        <figcaption><strong>Settings.</strong> Dry-run mode, Trash by default, exclusions and an activity log.</figcaption>
+      </figure>
+    </div>
+  </section>
 
   <section id="features">
     <p class="mono">What it does</p>

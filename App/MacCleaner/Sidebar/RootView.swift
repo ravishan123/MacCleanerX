@@ -42,6 +42,9 @@ struct RootView: View {
         .onReceive(NotificationCenter.default.publisher(for: NSApplication.didBecomeActiveNotification)) { _ in
             app.settings.refreshFullDiskAccess()
         }
+        #if DEBUG
+        .onAppear { ScreenshotMode.apply(navigation: navigation, app: app) }
+        #endif
     }
 }
 
@@ -135,3 +138,34 @@ struct SidebarView: View {
         .help(item.isAvailable ? item.title : "Coming in a later version")
     }
 }
+
+#if DEBUG
+/// Debug-only hook for README/website screenshots (see `scripts/make-screenshots.sh`).
+/// `-screenshotScreen <SidebarItem rawValue>` opens that screen; `-screenshotScan YES` starts its scan.
+/// Scans are read-only, so this never changes any file.
+@MainActor
+enum ScreenshotMode {
+    static func apply(navigation: NavigationModel, app: AppModel) {
+        let defaults = UserDefaults.standard
+        guard let raw = defaults.string(forKey: "screenshotScreen"),
+              let screen = SidebarItem(rawValue: raw) else { return }
+        app.showOnboarding = false
+        navigation.selection = screen
+        guard defaults.bool(forKey: "screenshotScan") else { return }
+        let context = app.settings.makeContext()
+        switch screen {
+        case .smartCare: app.smartCare.start()
+        case .cleanup: app.cleanup.scan()
+        case .storage: app.storage.scan()
+        case .largeFiles:
+            let criteria = app.largeFileCriteria
+            app.largeFiles.scan { await LargeOldFilesModule(context: context, criteria: criteria).scan() }
+        case .duplicates:
+            app.duplicates.scan { await DuplicatesModule(context: context).scan() }
+        case .uninstaller:
+            app.uninstaller.scanLeftovers()
+        default: break
+        }
+    }
+}
+#endif
